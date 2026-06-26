@@ -3,481 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NURALEM PANEL v2.0</title>
+    <title>ERİŞİM ENGELLENDİ | SİSTEMDEN UZAKLAŞTIRILDINIZ</title>
     <style>
-        :root {
-            --bg-color: #0b0f19;
-            --sidebar-bg: #111827;
-            --card-bg: #1f2937;
-            --accent-color: #3b82f6;
-            --accent-hover: #2563eb;
-            --text-color: #f9fafb;
-            --text-muted: #9ca3af;
-            --border-color: #374151;
-            --success: #10b981;
-            --error: #ef4444;
-            --sidebar-width: 280px;
-        }
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Courier New', Courier, monospace;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: #050508;
+            color: #ff3333;
             display: flex;
-            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
             overflow: hidden;
-        }
-
-        /* --- SOL PANEL (SIDEBAR) --- */
-        .sidebar {
-            width: var(--sidebar-width);
-            background-color: var(--sidebar-bg);
-            border-right: 1px solid var(--border-color);
-            display: flex;
             flex-direction: column;
-            transition: transform 0.3s ease;
-            z-index: 100;
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-        }
-
-        .sidebar.closed {
-            transform: translateX(-100%);
-        }
-
-        .sidebar-header {
+            text-align: center;
             padding: 20px;
-            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
-        .sidebar-header h3 {
-            font-size: 1.1rem;
-            letter-spacing: 0.5px;
-        }
-
-        .menu-list {
-            list-style: none;
-            padding: 15px;
-            overflow-y: auto;
-            flex: 1;
-        }
-
-        .menu-item {
-            padding: 12px 15px;
-            margin-bottom: 8px;
-            border-radius: 6px;
-            cursor: pointer;
-            background-color: rgba(255, 255, 255, 0.03);
-            border: 1px solid transparent;
-            transition: all 0.2s ease;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .menu-item:hover, .menu-item.active {
-            background-color: rgba(59, 130, 246, 0.15);
-            border-color: var(--accent-color);
-            color: #fff;
-        }
-
-        /* --- ANA İÇERİK ALANI --- */
-        .main-content {
-            flex: 1;
-            margin-left: var(--sidebar-width);
-            transition: margin-left 0.3s ease;
-            padding: 30px;
-            height: 100vh;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .main-content.expanded {
-            margin-left: 0;
-        }
-
-        /* Üst Bar (Toggle Butonunun Olduğu Yer) */
-        .top-bar {
-            display: flex;
-            align-items: center;
-            margin-bottom: 25px;
-            gap: 15px;
-        }
-
-        .toggle-btn {
-            background-color: var(--card-bg);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            padding: 10px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.2s;
-        }
-
-        .toggle-btn:hover {
-            background-color: var(--border-color);
-        }
-
-        .panel-title {
-            font-size: 1.4rem;
-            font-weight: bold;
-        }
-
-        /* Form ve Sonuç Kartları */
-        .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
+        .ban-container {
+            border: 2px solid #ff3333;
+            padding: 40px;
+            background-color: #0d0e15;
+            box-shadow: 0 0 30px rgba(255, 51, 51, 0.2);
             border-radius: 8px;
-            padding: 25px;
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+        }
+
+        .ban-container::before {
+            content: "🚨 CRITICAL ERROR 🚨";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ff3333;
+            color: #050508;
+            padding: 2px 15px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            font-weight: 900;
+            text-transform: uppercase;
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        p {
+            color: #8a8f98;
+            font-size: 1rem;
+            line-height: 1.6;
             margin-bottom: 25px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
 
-        .card-title {
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
-            color: var(--accent-color);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--bg-color);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: var(--text-color);
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        input:focus {
-            border-color: var(--accent-color);
-        }
-
-        .grid-inputs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .btn {
-            background-color: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            transition: background 0.2s;
-        }
-
-        .btn:hover {
-            background-color: var(--accent-hover);
-        }
-
-        /* Durumlar */
-        .status {
-            padding: 12px;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            margin-top: 15px;
-            display: none;
-        }
-
-        .status.loading {
-            background-color: rgba(59, 130, 246, 0.1);
-            color: #60a5fa;
-            border: 1px solid var(--accent-color);
-            display: block;
-        }
-
-        .status.error {
-            background-color: rgba(239, 68, 68, 0.1);
-            color: #f87171;
-            border: 1px solid var(--error);
-            display: block;
-        }
-
-        /* Çıktı Alanı */
-        .result-zone {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-height: 300px;
-        }
-
-        .result-header {
-            font-weight: bold;
-            color: var(--success);
-            margin-bottom: 10px;
-            font-size: 0.95rem;
-        }
-
-        textarea {
-            width: 100%;
-            flex: 1;
+        .details-box {
+            background-color: #050508;
+            border: 1px dashed #ff3333;
             padding: 15px;
-            background-color: #070a12;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: #34d399;
-            font-family: 'Courier New', Courier, monospace;
             font-size: 0.9rem;
-            resize: none;
-            outline: none;
+            text-align: left;
+            color: #ff6666;
+            margin-bottom: 20px;
+            border-radius: 4px;
         }
 
-        /* Mobil Uyumluluk Ayarı */
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
+        .details-row {
+            margin-bottom: 8px;
+        }
+        .details-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .label {
+            color: #8a8f98;
+        }
+
+        .footer-text {
+            font-size: 0.8rem;
+            color: #444;
+            margin-top: 15px;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                text-shadow: 0 0 10px rgba(255, 51, 51, 0.5);
             }
-            .sidebar.active {
-                transform: translateX(0);
-            }
-            .main-content {
-                margin-left: 0 !important;
+            100% {
+                transform: scale(1.02);
+                text-shadow: 0 0 25px rgba(255, 51, 51, 0.9), 0 0 40px rgba(255, 51, 51, 0.4);
             }
         }
     </style>
 </head>
 <body>
 
-<div class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-        <h3>NURALEM v2.0</h3>
-    </div>
-    <ul class="menu-list" id="menuList">
-        </ul>
-</div>
-
-<div class="main-content" id="mainContent">
-    
-    <div class="top-bar">
-        <button class="toggle-btn" onclick="ToggleSidebar()">☰ Menü</button>
-        <div class="panel-title" id="panelTitle">T.C. Kimlik Sorgu</div>
-    </div>
-
-    <div class="card">
-        <div class="card-title" id="formTitle">Parametre Girişi</div>
-        <div id="dinamik_alanlar">
-            </div>
-        <button class="btn" style="margin-top: 10px;" onclick="Sorgula()">Sorguyu Çalıştır</button>
-        <div id="durum_mesaji" class="status"></div>
-    </div>
-
-    <div class="card result-zone">
-        <div class="result-header" id="sonuc_baslik">NURALEM PANEL SONUÇ PENCERESİ</div>
-        <textarea id="sonuc_kutusu" readonly placeholder="API'den dönen yanıtlar burada ham JSON formatında listelenir..."></textarea>
-    </div>
-
-</div>
-
-<script>
-    // API Temel Sözlüğü
-    const API_ENDPOINTS = {
-        "1": {"url": "https://arastir.vip/api/tc.php", "param": "tc", "name": "T.C. Kimlik Sorgu"},
-        "2": {"url": "https://arastir.vip/api/adsoyad.php", "name": "Ad / Soyad Sorgu"},
-        "3": {"url": "https://arastir.vip/api/sulale.php", "param": "tc", "name": "Sülale Sorgu"},
-        "4": {"url": "https://arastir.vip/api/isyeri.php", "param": "tc", "name": "İş Yeri Sorgu"},
-        "5": {"url": "https://arastir.vip/api/tcgsm.php", "param": "tc", "name": "T.C.'den GSM Sorgu"},
-        "6": {"url": "https://arastir.vip/api/gsmtc.php", "param": "gsm", "name": "GSM'den T.C. Sorgu"},
-        "7": {"url": "https://arastir.vip/api/adres.php", "param": "tc", "name": "Adres Sorgu"}
-    };
-
-    let aktifSecim = "1";
-
-    window.onload = function() {
-        MenuOlustur();
-        ModDegistir("1");
-    };
-
-    function ToggleSidebar() {
-        const sidebar = document.getElementById("sidebar");
-        const mainContent = document.getElementById("mainContent");
+    <div class="ban-container">
+        <h1>BANLANDIN</h1>
+        <p>İlah Checker sistem kurallarına veya kullanım sözleşmesine aykırı davrandığınız tespit edildiği için bu panele olan erişiminiz kalıcı olarak <strong>engellenmiştir</strong>.</p>
         
-        if (window.innerWidth <= 768) {
-            sidebar.classList.toggle("active");
-        } else {
-            sidebar.classList.toggle("closed");
-            mainContent.classList.toggle("expanded");
-        }
-    }
+        <div class="details-box">
+            <div class="details-row"><span class="label">Durum:</span> KARA LİSTE (BLACKLISTED)</div>
+            <div class="details-row"><span class="label">Sebep:</span> Yetkisiz Erişim ve Kural İhlali</div>
+            <div class="details-row"><span class="label">Kısıtlama:</span> Donanım (HWID) ve IP Engeli</div>
+        </div>
 
-    function MenuOlustur() {
-        const list = document.getElementById("menuList");
-        list.innerHTML = "";
-        
-        Object.keys(API_ENDPOINTS).forEach(key => {
-            const item = API_ENDPOINTS[key];
-            const li = document.createElement("li");
-            li.className = `menu-item ${key === aktifSecim ? 'active' : ''}`;
-            li.id = `menu_${key}`;
-            li.innerText = `${key}. ${item.name}`;
-            li.onclick = () => ModDegistir(key);
-            list.appendChild(li);
-        });
-    }
+        <p style="font-size: 0.9rem; color: #ff3333; font-weight: bold; margin-bottom: 0;">
+            Geçmiş olsun kanka, artık bu hesaba su bile yok.
+        </p>
+    </div>
 
-    function ModDegistir(key) {
-        document.getElementById(`menu_${aktifSecim}`).classList.remove("active");
-        aktifSecim = key;
-        document.getElementById(`menu_${aktifSecim}`).classList.add("active");
-
-        const mod = API_ENDPOINTS[key];
-        document.getElementById("panelTitle").innerText = mod.name;
-        document.getElementById("formTitle").innerText = `${mod.name} Parametreleri`;
-
-        const alanlarDiv = document.getElementById("dinamik_alanlar");
-        document.getElementById("durum_mesaji").style.display = "none";
-        document.getElementById("sonuc_kutusu").value = "";
-
-        if (key === "2") {
-            alanlarDiv.innerHTML = `
-                <div class="grid-inputs">
-                    <div class="form-group">
-                        <label>Adı (Zorunlu)</label>
-                        <input type="text" id="input_ad" placeholder="Örn: Ahmet">
-                    </div>
-                    <div class="form-group">
-                        <label>Soyadı (Zorunlu)</label>
-                        <input type="text" id="input_soyad" placeholder="Örn: Yılmaz">
-                    </div>
-                </div>
-                <div class="grid-inputs">
-                    <div class="form-group">
-                        <label>İl (Opsiyonel)</label>
-                        <input type="text" id="input_il" placeholder="Örn: Ankara">
-                    </div>
-                    <div class="form-group">
-                        <label>İlçe (Opsiyonel)</label>
-                        <input type="text" id="input_ilce" placeholder="Örn: Çankaya">
-                    </div>
-                </div>
-            `;
-        } else {
-            const param = mod.param.toUpperCase();
-            alanlarDiv.innerHTML = `
-                <div class="form-group">
-                    <label>Sorgulanacak ${param} Değeri</label>
-                    <input type="text" id="input_standart" placeholder="${param} giriniz...">
-                </div>
-            `;
-        }
-
-        if (window.innerWidth <= 768) {
-            document.getElementById("sidebar").classList.remove("active");
-        }
-    }
-
-    async function Sorgula() {
-        const durumDiv = document.getElementById("durum_mesaji");
-        const sonucKutusu = document.getElementById("sonuc_kutusu");
-        const mod = API_ENDPOINTS[aktifSecim];
-
-        durumDiv.style.display = "none";
-        sonucKutusu.value = "";
-
-        let payload = {};
-
-        if (aktifSecim === "2") {
-            const ad = document.getElementById("input_ad").value.trim();
-            const soyad = document.getElementById("input_soyad").value.trim();
-            const il = document.getElementById("input_il").value.trim();
-            const ilce = document.getElementById("input_ilce").value.trim();
-
-            if (!ad || !soyad) {
-                HataGoster("⚠️ Hata: Ad ve Soyad alanları boş bırakılamaz!");
-                return;
-            }
-            payload = { adi: ad, soyadi: soyad, il: il, ilce: ilce };
-            DurumGoster(`⏳ ${ad} ${soyad} için geniş arama sorgusu atılıyor...`, "loading");
-        } else {
-            const girdi = document.getElementById("input_standart").value.trim();
-            const paramAdi = mod.param;
-
-            if (!girdi) {
-                HataGoster(`⚠️ Hata: Lütfen geçerli bir ${paramAdi.toUpperCase()} değeri girin!`);
-                return;
-            }
-
-            if (paramAdi === "tc" && (!/^\d+$/.test(girdi) || girdi.length !== 11)) {
-                HataGoster("⚠️ Hata: T.C. numarası 11 haneli ve tamamen rakamlardan oluşmalıdır!");
-                return;
-            }
-
-            payload[paramAdi] = girdi;
-            DurumGoster(`⏳ ${mod.name} isteği sunucuya gönderiliyor...`, "loading");
-        }
-
-        try {
-            const urlParams = new URLSearchParams(payload).toString();
-            const fullUrl = `${mod.url}?${urlParams}`;
-
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 10000);
-
-            const response = await fetch(fullUrl, { signal: controller.signal });
-            clearTimeout(timeoutId);
-
-            if (!response.ok) throw new Error(`HTTP Hata Kodu: ${response.status}`);
-
-            const jsonVeri = await response.json();
-            
-            durumDiv.style.display = "none";
-            sonucKutusu.value = JSON.stringify(jsonVeri, null, 4);
-
-        } catch (err) {
-            if (err.name === 'AbortError') {
-                HataGoster("❌ Bağlantı Hatası: API sunucusu 10 saniye boyunca yanıt vermedi (Timeout).");
-            } else if (err instanceof SyntaxError) {
-                HataGoster("❌ Hata: Sunucudan geçersiz veri döndü (JSON biçiminde değil).");
-            } else {
-                HataGoster(`❌ Bağlantı Hatası: Sunucuya ulaşılamadı. (${err.message})`);
-            }
-        }
-    }
-
-    function DurumGoster(msg, type) {
-        const div = document.getElementById("durum_mesaji");
-        div.innerText = msg;
-        div.className = `status ${type}`;
-    }
-
-    function HataGoster(msg) {
-        DurumGoster(msg, "error");
-    }
-</script>
+    <div class="footer-text">İlah Checker Security Infrastructure Version 2.0</div>
 
 </body>
 </html>
